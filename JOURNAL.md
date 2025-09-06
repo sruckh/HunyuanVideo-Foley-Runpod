@@ -148,10 +148,33 @@ When JOURNAL.md exceeds 500 lines:
 
 ---
 
+## 2024-09-06 16:15 - Runtime Installation Fixes for Python 3.12
+
+### [Python 3.12 Compatibility and Directory Handling]
+
+**What**: Fixed additional runtime issues with Python 3.12 compatibility and git clone directory conflicts.
+
+**Why**: Ubuntu 24.04 container base image includes Python 3.12, requiring updates to wheel URLs and handling of directory conflicts from container restarts.
+
+**How**:
+- Updated Flash Attention wheel from cp310 to cp312 for Python 3.12 compatibility
+- Added conditional directory checks before git clone operations
+- Implemented idempotent behavior for container restarts
+
+**Issues**:
+- Python version mismatch between wheel compilation (3.10) and runtime (3.12)
+- Git clone failures when HunyuanVideo-Foley directory already exists
+- Lack of restart-safe script behavior
+
+**Result**: Container runtime installation now works flawlessly with Ubuntu 24.04's Python 3.12 environment and handles directory conflicts properly.
+
+---
+
 ## Version History
 - **v1.0.0** - Containerization and deployment infrastructure
 - **v1.0.1** - Documentation framework implementation
 - **v1.0.2** - PEP 668 compatibility and documentation completion
+- **v1.0.3** - Python 3.12 compatibility and directory handling
 
 ### Compaction Rule
 When JOURNAL.md exceeds 500 lines:
