@@ -20,9 +20,13 @@ cd HunyuanVideo-Foley
 echo "📋 Installing requirements..."
 pip install -r requirements.txt --break-system-packages
 
-# 4. Clone model repository
+# 4. Clone model repository (handle existing directories)
 echo "🎯 Downloading model from Hugging Face..."
-git clone https://huggingface.co/tencent/HunyuanVideo-Foley
+if [ ! -d "HunyuanVideo-Foley" ]; then
+    git clone https://huggingface.co/tencent/HunyuanVideo-Foley
+else
+    echo "📁 Model repository already exists, skipping clone..."
+fi
 
 # Use hf to download the model (install hf first)
 echo "🔧 Installing hf..."
@@ -45,9 +49,9 @@ except Exception as e:
 export HIFI_FOLEY_MODEL_PATH=/app/HunyuanVideo-Foley/HunyuanVideo-Foley
 echo "📝 Model path set to: $HIFI_FOLEY_MODEL_PATH"
 
-# 6. Install flash_attn
+# 6. Install flash_attn (Python 3.12 compatibility)
 echo "⚡ Installing flash-attention..."
-pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp310-cp310-linux_x86_64.whl --break-system-packages
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp312-cp312-linux_x86_64.whl --break-system-packages
 
 # 7. Return to app directory
 cd /app
