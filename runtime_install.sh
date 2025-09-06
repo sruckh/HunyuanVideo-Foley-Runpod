@@ -7,9 +7,9 @@ set -e
 
 echo "🚀 Starting HunyuanVideo-Foley Runtime Installation..."
 
-# 1. Install PyTorch
+# 1. Install PyTorch (handle PEP 668 externally managed environment)
 echo "📦 Installing PyTorch..."
-pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu121 --break-system-packages
 
 # 2. Clone repository
 echo "📥 Cloning HunyuanVideo-Foley repository..."
@@ -18,7 +18,7 @@ cd HunyuanVideo-Foley
 
 # 3. Install requirements
 echo "📋 Installing requirements..."
-pip install -r requirements.txt
+pip install -r requirements.txt --break-system-packages
 
 # 4. Clone model repository
 echo "🎯 Downloading model from Hugging Face..."
@@ -26,7 +26,7 @@ git clone https://huggingface.co/tencent/HunyuanVideo-Foley
 
 # Use hf to download the model (install hf first)
 echo "🔧 Installing hf..."
-pip install hf-hub
+pip install hf-hub --break-system-packages
 
 # Download the model using hf
 echo "⬇️ Downloading tencent/HunyuanVideo-Foley model..."
@@ -47,7 +47,7 @@ echo "📝 Model path set to: $HIFI_FOLEY_MODEL_PATH"
 
 # 6. Install flash_attn
 echo "⚡ Installing flash-attention..."
-pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp310-cp310-linux_x86_64.whl --break-system-packages
 
 # 7. Return to app directory
 cd /app
