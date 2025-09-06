@@ -190,6 +190,22 @@ When JOURNAL.md exceeds 500 lines:
 
 ---
 
+## 2025-09-06 18:45 - CUDA Version Synchronization Issue Identified
+
+### [CUDA Version Mismatch Problem] |TASK:TASK-2025-09-06-003|
+
+- **What**: Identified critical CUDA version synchronization issue between PyTorch ecosystem packages and base Docker image.
+
+- **Why**: Container runtime is installing PyTorch (cu121) and TorchAudio (cu124) with different CUDA versions than the base image (CUDA 12.8.1), causing runtime errors when trying to generate video content.
+
+- **How**: Analysis of runtime_install.sh shows that requirements.txt is installing PyTorch packages with mismatched CUDA versions. Base image is nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04 but packages are installing older CUDA versions.
+
+- **Issues**: "PyTorch has CUDA version 12.1 whereas TorchAudio has CUDA version 12.4" error during Gradio app inference. This indicates that TorchAudio in requirements.txt is using CUDA 12.4 while PyTorch runtime is 12.1.
+
+- **Result**: Created task to fix CUDA synchronization by ensuring all PyTorch ecosystem packages use CUDA 12.8.x, implement dynamic flash_attn URL generation, and force synchronization across all dependencies.
+
+---
+
 ## Version History
 - **v1.0.0** - Containerization and deployment infrastructure
 - **v1.0.1** - Documentation framework implementation
