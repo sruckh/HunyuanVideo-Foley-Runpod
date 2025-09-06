@@ -179,6 +179,7 @@ When JOURNAL.md exceeds 500 lines:
 - **v1.0.1** - Documentation framework implementation
 - **v1.0.2** - PEP 668 compatibility and documentation completion
 - **v1.0.3** - Python 3.12 compatibility and directory handling
+- **v1.0.4** - PyTorch installation fix per GOALS.md requirements
 
 ### Compaction Rule
 When JOURNAL.md exceeds 500 lines:
