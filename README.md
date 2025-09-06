@@ -8,7 +8,7 @@ AI-powered video generation with synchronized Foley sound effects, containerized
 1. Deploy the container: `gemneye/hunyuanvideo-foley-runpod:latest`
 2. Port: 7860
 3. GPU: Required (NVIDIA recommended)
-4. Access: `http://your-runpod-url:7860`
+4. Access: `http://your-runpod-url:7860` (or use the shared public URL)
 
 ### Local Development
 ```bash

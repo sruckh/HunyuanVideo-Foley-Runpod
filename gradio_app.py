@@ -8,6 +8,7 @@ import sys
 import gradio as gr
 import torch
 from typing import Optional, Tuple
+from pathlib import Path
 import subprocess
 import time
 
@@ -191,7 +192,7 @@ def main():
         interface.launch(
             server_name="0.0.0.0",
             server_port=7860,
-            share=False,
+            share=True,
             debug=True,
             show_error=True,
             auth=None
