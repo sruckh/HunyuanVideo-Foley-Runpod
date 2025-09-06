@@ -152,21 +152,25 @@ When JOURNAL.md exceeds 500 lines:
 
 ### [Python 3.12 Compatibility and Directory Handling]
 
-**What**: Fixed additional runtime issues with Python 3.12 compatibility and git clone directory conflicts.
+**What**: Fixed multiple runtime issues including Python 3.12 compatibility, PyTorch version pinning, and Hugging Face CLI installation.
 
-**Why**: Ubuntu 24.04 container base image includes Python 3.12, requiring updates to wheel URLs and handling of directory conflicts from container restarts.
+**Why**: Ubuntu 24.04 container base image includes Python 3.12, requiring coordinated updates across PyTorch, Flash Attention wheel, and package installations.
 
 **How**:
+- Pinned PyTorch to 2.8.2+cu121 to match GOALS.md original requirements
 - Updated Flash Attention wheel from cp310 to cp312 for Python 3.12 compatibility
 - Added conditional directory checks before git clone operations
+- Consulted Context7 (per GOALS.md directive) for proper Hugging Face CLI installation
+- Changed from invalid "hf-hub" to correct "huggingface_hub[cli]" package
 - Implemented idempotent behavior for container restarts
 
 **Issues**:
-- Python version mismatch between wheel compilation (3.10) and runtime (3.12)
-- Git clone failures when HunyuanVideo-Foley directory already exists
-- Lack of restart-safe script behavior
+- PyTorch version resolver chose 2.5.1 instead of GOALS.md intended 2.8.x
+- Python version mismatch between Flash Attention wheel (3.10) and runtime (3.12)
+- Hugging Face CLI installation failed due to incorrect package name
+- Git clone failures when directory already exists from container restarts
 
-**Result**: Container runtime installation now works flawlessly with Ubuntu 24.04's Python 3.12 environment and handles directory conflicts properly.
+**Result**: Container runtime installation now works flawlessly with proper PyTorch 2.8 compatibility and full Hugging Face CLI functionality per GOALS.md requirements.
 
 ---
 
