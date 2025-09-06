@@ -7,9 +7,9 @@ set -e
 
 echo "🚀 Starting HunyuanVideo-Foley Runtime Installation..."
 
-# 1. Install PyTorch (handle PEP 668 externally managed environment)
+# 1. Install PyTorch (match GOALS.md requirements: PyTorch 2.8 for Flash Attention compatibility)
 echo "📦 Installing PyTorch..."
-pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu121 --break-system-packages
+pip3 install torch==2.8.2+cu121 torchvision==0.19.2+cu121 --index-url https://download.pytorch.org/whl/cu121 --break-system-packages
 
 # 2. Clone repository
 echo "📥 Cloning HunyuanVideo-Foley repository..."
@@ -29,8 +29,8 @@ else
 fi
 
 # Use hf to download the model (install hf first)
-echo "🔧 Installing hf..."
-pip install hf-hub --break-system-packages
+echo "🔧 Installing huggingface_hub CLI..."
+pip install "huggingface_hub[cli]" --break-system-packages
 
 # Download the model using hf
 echo "⬇️ Downloading tencent/HunyuanVideo-Foley model..."
