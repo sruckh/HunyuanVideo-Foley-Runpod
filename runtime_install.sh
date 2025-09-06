@@ -9,7 +9,7 @@ echo "🚀 Starting HunyuanVideo-Foley Runtime Installation..."
 
 # 1. Install PyTorch (match GOALS.md requirements: PyTorch 2.8 for Flash Attention compatibility)
 echo "📦 Installing PyTorch..."
-pip3 install torch==2.8.2+cu121 torchvision==0.19.2+cu121 --index-url https://download.pytorch.org/whl/cu121 --break-system-packages
+pip3 install torch==2.5.1+cu121 torchvision --index-url https://download.pytorch.org/whl/cu121 --break-system-packages
 
 # 2. Clone repository
 echo "📥 Cloning HunyuanVideo-Foley repository..."
