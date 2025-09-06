@@ -7,7 +7,7 @@ AI-powered video generation with synchronized Foley sound effects, containerized
 ### On RunPod
 1. Deploy the container: `gemneye/hunyuanvideo-foley-runpod:latest`
 2. Port: 7860
-3. GPU: Required (NVIDIA recommended)
+3. GPU: Required (NVIDIA with CUDA 12.1+ recommended)
 4. Access: `http://your-runpod-url:7860` (or use the shared public URL)
 
 ### Local Development
@@ -20,7 +20,7 @@ docker compose up --build
 
 ## 🏗️ Architecture
 
-- **Base Image**: `nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04`
+- **Base Image**: `nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04`
 - **Runtime Installation**: All dependencies installed at container startup
 - **Model**: Tencent HunyuanVideo-Foley (`tencent/HunyuanVideo-Foley` from Hugging Face)
 - **Web Interface**: Gradio-based UI for video generation

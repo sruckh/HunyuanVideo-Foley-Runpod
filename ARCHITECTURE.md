@@ -37,9 +37,9 @@ HunyuanVideo-Foley-RunPod/
 
 ### [Decision 2]: CUDA Base Image Selection
 **Context**: Need for NVIDIA GPU support with latest driver compatibility
-**Decision**: Use nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04 base image
-**Rationale**: Latest CUDA version ensures compatibility with Hugging Face models, Ubuntu 24.04 for modern package support, devel variant for PyTorch compilation
-**Consequences**: Larger image size (~8GB), AMD64-only architecture as per requirements, GPU-only deployment model
+**Decision**: Use nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04 base image
+**Rationale**: Align base image CUDA 12.1 with PyTorch ecosystem (cu121) to prevent version conflicts, Ubuntu 22.04 for stable package support, runtime variant for optimized deployment size
+**Consequences**: Smaller image size (~4GB), AMD64-only architecture as per requirements, GPU-only deployment model, compatible with requirements.txt PyTorch versions
 
 ### [Decision 3]: Model Download Strategy
 **Context**: 50GB+ model files that must be downloaded securely

@@ -54,8 +54,8 @@ import sys
 python_version = f'{sys.version_info.major}{sys.version_info.minor}'
 print(f'Detected Python version: {python_version}')
 
-# Generate flash_attn URL based on detected Python version
-flash_attn_url = f'https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post1/flash_attn-2.7.0.post1+cu12torch2.5cxx11abiFALSE-cp{python_version}-cp{python_version}-linux_x86_64.whl'
+# Generate flash_attn URL based on detected Python version - CUDA 12.1 compatible
+flash_attn_url = f'https://github.com/Dao-AILab/flash-attention/releases/download/v2.4.2/flash_attn-2.4.2+cu121torch2.1cxx11abiFALSE-cp{python_version}-cp{python_version}-linux_x86_64.whl'
 print(f'Flash Attention URL: {flash_attn_url}')
 
 import subprocess
