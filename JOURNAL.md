@@ -174,12 +174,29 @@ When JOURNAL.md exceeds 500 lines:
 
 ---
 
+## 2025-09-06 17:30 - PyTorch 2.5 Configuration and Compatibility Fix
+
+### [Torch 2.5 Installation Configuration] |TASK:TASK-2025-09-06-002|
+
+- **What**: Updated runtime_install.sh to properly configure PyTorch 2.5 installation and flash-attention compatibility for the HunyuanVideo-Foley container environment.
+
+- **Why**: Container logs were showing torch version conflicts during startup, and flash-attention wheel was incompatible with the torch version being installed.
+
+- **How**: Removed separate PyTorch installation from runtime_install.sh to prevent conflicts, letting requirements.txt handle torch 2.5 installation per GOALS.md specification. Updated flash-attention wheel to v2.7.0.post1 with torch 2.5 and Python 3.12 compatibility.
+
+- **Issues**: Container logs indicated torch version conflicts between separate installation and requirements.txt. Flash Attention wheel version mismatch causing compatibility problems.
+
+- **Result**: Container startup should now have consistent torch 2.5 installation without conflicts, with proper flash-attention wheel compatibility maintained.
+
+---
+
 ## Version History
 - **v1.0.0** - Containerization and deployment infrastructure
 - **v1.0.1** - Documentation framework implementation
 - **v1.0.2** - PEP 668 compatibility and documentation completion
 - **v1.0.3** - Python 3.12 compatibility and directory handling
 - **v1.0.4** - PyTorch installation fix per GOALS.md requirements
+- **v1.0.5** - PyTorch 2.5 configuration and flash-attention compatibility
 
 ### Compaction Rule
 When JOURNAL.md exceeds 500 lines:

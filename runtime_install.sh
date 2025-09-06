@@ -7,9 +7,7 @@ set -e
 
 echo "🚀 Starting HunyuanVideo-Foley Runtime Installation..."
 
-# 1. Install PyTorch (match GOALS.md requirements: PyTorch 2.8 for Flash Attention compatibility)
-echo "📦 Installing PyTorch..."
-pip3 install torch==2.5.1+cu121 torchvision --index-url https://download.pytorch.org/whl/cu121 --break-system-packages
+# 1. Install PyTorch via requirements.txt to ensure torch 2.5 compatibility
 
 # 2. Clone repository
 echo "📥 Cloning HunyuanVideo-Foley repository..."
@@ -49,9 +47,9 @@ except Exception as e:
 export HIFI_FOLEY_MODEL_PATH=/app/HunyuanVideo-Foley/HunyuanVideo-Foley
 echo "📝 Model path set to: $HIFI_FOLEY_MODEL_PATH"
 
-# 6. Install flash_attn (Python 3.12 compatibility)
+# 6. Install flash_attn (torch 2.5 compatibility)
 echo "⚡ Installing flash-attention..."
-pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp312-cp312-linux_x86_64.whl --break-system-packages
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post1/flash_attn-2.7.0.post1+cu12torch2.5cxx11abiFALSE-cp312-cp312-linux_x86_64.whl --break-system-packages
 
 # 7. Return to app directory
 cd /app
