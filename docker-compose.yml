@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  hunyuanvideo-foley:
+    build: 
+      context: .
+    image: hunyuanvideo-foley-runpod:latest
+    container_name: hunyuanvideo-foley
+    ports:
+      - "7860:7860"
+    environment:
+      - HIFI_FOLEY_MODEL_PATH=/app/models/HunyuanVideo-Foley
+      - HF_TOKEN=${HF_TOKEN:-}  # Optional Hugging Face token for private models
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - ./models:/app/models
+      - ./outputs:/app/outputs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    stdin_open: true
+    tty: true
