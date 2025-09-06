@@ -47,9 +47,29 @@ except Exception as e:
 export HIFI_FOLEY_MODEL_PATH=/app/HunyuanVideo-Foley/HunyuanVideo-Foley
 echo "📝 Model path set to: $HIFI_FOLEY_MODEL_PATH"
 
-# 6. Install flash_attn (torch 2.5 compatibility)
+# 6. Install flash_attn (torch 2.5 compatibility with dynamic Python detection)
 echo "⚡ Installing flash-attention..."
-pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post1/flash_attn-2.7.0.post1+cu12torch2.5cxx11abiFALSE-cp312-cp312-linux_x86_64.whl --break-system-packages
+python3 -c "
+import sys
+python_version = f'{sys.version_info.major}{sys.version_info.minor}'
+print(f'Detected Python version: {python_version}')
+
+# Generate flash_attn URL based on detected Python version
+flash_attn_url = f'https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post1/flash_attn-2.7.0.post1+cu12torch2.5cxx11abiFALSE-cp{python_version}-cp{python_version}-linux_x86_64.whl'
+print(f'Flash Attention URL: {flash_attn_url}')
+
+import subprocess
+try:
+    result = subprocess.run(['pip', 'install', flash_attn_url, '--break-system-packages'], capture_output=True, text=True)
+    if result.returncode == 0:
+        print('✅ Flash-attention installed successfully')
+    else:
+        print(f'❌ Installation failed: {result.stderr}')
+        sys.exit(1)
+except Exception as e:
+    print(f'❌ Installation error: {e}')
+    sys.exit(1)
+"
 
 # 7. Return to app directory
 cd /app
