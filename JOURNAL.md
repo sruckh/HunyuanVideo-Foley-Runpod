@@ -188,6 +188,18 @@ When JOURNAL.md exceeds 500 lines:
 
 - **Result**: Container startup should now have consistent torch 2.5 installation without conflicts, with proper flash-attention wheel compatibility maintained.
 
+### [PyTorch Installation and CUDA Synchronization Completion] |TASK:TASK-2025-09-06-004|
+
+- **What**: Final resolution of pip command issues and complete PyTorch ecosystem CUDA synchronization for container deployment.
+
+- **Why**: Container startup was failing due to pip command unrecognized flags (--break-system-packages) and inconsistent CUDA versions between PyTorch packages.
+
+- **How**: Fixed all pip commands to use python3 -m pip, removed problematic --break-system-packages flags, upgraded pip in Dockerfile, specified exact PyTorch versions (torch==2.5.1, torchvision==0.20.1, torchaudio==2.5.1) from cu121 index to ensure CUDA 12.1 compatibility across entire ecosystem.
+
+- **Issues**: 1) Pip help text displayed instead of installation due to unrecognized --break-system-packages flag, 2) PyTorch/TorchAudio CUDA version mismatches from different installation sources.
+
+- **Result**: Container runtime installation now properly installs consistent CUDA 12.1 versions for all PyTorch ecosystem packages. PyTorch installation uses explicit version specification instead of generic package names. flash_attn uses torch==2.5.1 compatibility.
+
 ---
 
 ## 2025-09-06 18:45 - CUDA Version Synchronization Issue Identified
