@@ -14,11 +14,15 @@ echo "📥 Cloning HunyuanVideo-Foley repository..."
 git clone https://github.com/Tencent-Hunyuan/HunyuanVideo-Foley
 cd HunyuanVideo-Foley
 
-# 3. Install requirements
-echo "📋 Installing requirements..."
+# 3. Install PyTorch ecosystem first with cu121 (CUDA 12.1 consistency)
+echo "📦 Installing PyTorch ecosystem with CUDA 12.1 consistency..."
+pip install --index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio -f https://download.pytorch.org/whl/torch_stable.html --break-system-packages
+
+# 5. Install remaining requirements
+echo "📋 Installing additional requirements..."
 pip install -r requirements.txt --break-system-packages
 
-# 4. Clone model repository (handle existing directories)
+# 6. Clone model repository (handle existing directories)
 echo "🎯 Downloading model from Hugging Face..."
 if [ ! -d "HunyuanVideo-Foley" ]; then
     git clone https://huggingface.co/tencent/HunyuanVideo-Foley
@@ -26,11 +30,11 @@ else
     echo "📁 Model repository already exists, skipping clone..."
 fi
 
-# Use hf to download the model (install hf first)
+# 7. Install Hugging Face CLI
 echo "🔧 Installing huggingface_hub CLI..."
 pip install "huggingface_hub[cli]" --break-system-packages
 
-# Download the model using hf
+# 8. Download the model using hf
 echo "⬇️ Downloading tencent/HunyuanVideo-Foley model..."
 python3 -c "
 import os
@@ -43,11 +47,11 @@ except Exception as e:
     exit(1)
 "
 
-# 5. Set model environment variable
+# 9. Set model environment variable
 export HIFI_FOLEY_MODEL_PATH=/app/HunyuanVideo-Foley/HunyuanVideo-Foley
 echo "📝 Model path set to: $HIFI_FOLEY_MODEL_PATH"
 
-# 6. Install flash_attn (torch 2.5 compatibility with dynamic Python detection)
+# 10. Install flash_attn (torch 2.5 compatibility with dynamic Python detection)
 echo "⚡ Installing flash-attention..."
 python3 -c "
 import sys
@@ -71,9 +75,9 @@ except Exception as e:
     sys.exit(1)
 "
 
-# 7. Return to app directory
+# 11. Return to app directory
 cd /app
 
-# 8. Launch the gradio app
+# 12. Launch the gradio app
 echo "🚀 Launching Gradio application..."
 python3 gradio_app.py
