@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     build-essential \
+    && /usr/bin/python3 -m pip install --upgrade pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Create working directory
