@@ -22,26 +22,36 @@ python3 -m pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --inde
 echo "📋 Installing additional requirements..."
 python3 -m pip install -r requirements.txt
 
-# 6. Clone model repository (handle existing directories)
-echo "🎯 Downloading model from Hugging Face..."
+# 6. Clone HunyuanVideo-Foley repository (handle existing directories)
+echo "🎯 Cloning HunyuanVideo-Foley repository..."
 if [ ! -d "HunyuanVideo-Foley" ]; then
-    git clone https://huggingface.co/tencent/HunyuanVideo-Foley
+    git clone https://github.com/Tencent/HunyuanVideo-Foley
+elif [ ! -f "HunyuanVideo-Foley/requirements.txt" ]; then
+    echo "📁 Repository exists but appears incomplete, re-cloning..."
+    rm -rf HunyuanVideo-Foley
+    git clone https://github.com/Tencent/HunyuanVideo-Foley
 else
-    echo "📁 Model repository already exists, skipping clone..."
+    echo "📁 Repository appears complete, skipping clone..."
+    echo "📁 Pulling latest changes..."
+    cd HunyuanVideo-Foley && git pull origin main || echo "⚠️  Could not pull updates, using existing version"
+    cd ..
 fi
 
 # 7. Install Hugging Face CLI
 echo "🔧 Installing huggingface_hub CLI..."
 python3 -m pip install huggingface_hub[cli]
 
-# 8. Download the model using hf
+# 8. Download the model using HF snapshot
 echo "⬇️ Downloading tencent/HunyuanVideo-Foley model..."
 python3 -c "
 import os
 from huggingface_hub import snapshot_download
 try:
-    snapshot_download(repo_id='tencent/HunyuanVideo-Foley', local_dir='./pretrained_models', local_dir_use_symlinks=False)
-    print('✅ Model downloaded successfully')
+    # Download to the correct directory structure
+    target_dir = './HunyuanVideo-Foley/HunyuanVideo-Foley'
+    os.makedirs(target_dir, exist_ok=True)
+    snapshot_download(repo_id='tencent/HunyuanVideo-Foley', local_dir=target_dir, local_dir_use_symlinks=False)
+    print('✅ Model downloaded successfully to', target_dir)
 except Exception as e:
     print(f'❌ Failed to download model: {e}')
     exit(1)
@@ -58,8 +68,8 @@ import sys
 python_version = f'{sys.version_info.major}{sys.version_info.minor}'
 print(f'Detected Python version: {python_version}')
 
-# Generate flash_attn URL based on detected Python version - CUDA 12.1 compatible
-flash_attn_url = f'https://github.com/Dao-AILab/flash-attention/releases/download/v2.4.2/flash_attn-2.4.2+cu121torch2.5cxx11abiFALSE-cp{python_version}-cp{python_version}-linux_x86_64.whl'
+# Generate flash_attn URL using user's working temp waffle - cu12 instead of cu121
+flash_attn_url = f'https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post1/flash_attn-2.7.0.post1+cu12torch2.5cxx11abiFALSE-cp{python_version}-cp{python_version}-linux_x86_64.whl'
 print(f'Flash Attention URL: {flash_attn_url}')
 
 import subprocess
